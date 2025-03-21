@@ -1,6 +1,4 @@
 #include "Structures.h++"
-#include <iostream>
-
 //=================================================================
 //misc definitions
 //=================================================================
@@ -42,7 +40,7 @@ inline Base<iType>::~Base(){
 
 template<typename iType>
 inline iType Base<iType>::operator[](int index){
-  if(index > this->nElem) throw(777);
+  if(index > this->nElem);
   if(index >= 0) return this->eStart[index];
   else return *(this->eEnd + index + 1);
 }
@@ -51,8 +49,8 @@ inline iType Base<iType>::operator[](int index){
 //Unorganized definitions
 //=================================================================
 
-template<typename iType, int N>
-inline Unorganized<iType, N>::Unorganized(iType (&array)[N]){
+template<typename iType, unsigned int N>
+inline Unorganized<iType, N>::Unorganized(iType* array){
   //assign # of elements in array
   this->nElem = N;
   //assign total length of array
@@ -76,8 +74,8 @@ inline Unorganized<iType, N>::Unorganized(iType (&array)[N]){
 //GroupOrganized definitions
 //=================================================================
 
-template<typename iType, int N>
-inline GroupOrganized<iType, N>::GroupOrganized(iType (&array)[N], int groups){
+template<typename iType, unsigned int N>
+inline GroupOrganized<iType, N>::GroupOrganized(iType* array, int groups){
   //assign # of elements in array
   this->nElem = N;
   //assign total length of array
@@ -108,8 +106,8 @@ inline GroupOrganized<iType, N>::GroupOrganized(iType (&array)[N], int groups){
 //FullyOrganized definitions
 //=================================================================
 
-template<typename iType, int N>
-inline FullyOrganized<iType, N>::FullyOrganized(iType (&array)[N]){
+template<typename iType, unsigned int N>
+inline FullyOrganized<iType, N>::FullyOrganized(iType* array){
   //assign # of elements in array
   this->nElem = N;
   //assign total length of array

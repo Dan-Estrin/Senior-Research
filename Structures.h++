@@ -1,6 +1,5 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
-#include <iostream>
 template<typename iType>
 struct Base{
   protected:
@@ -17,27 +16,27 @@ struct Base{
   //number of total spaces in array
   int len;
 
-  ~Base();
+  inline ~Base();
 
   public:
   //+/- indexing
   iType operator[](int index);
 };
-template<typename iType, int N>
+template<typename iType, unsigned int N>
 class Unorganized : public Base<iType>{
   public:
-  Unorganized(iType (&array)[N]);//DONE
+  inline Unorganized(iType* array);//DONE
 };
 
-template<typename iType, int N>
+template<typename iType, unsigned int N>
 class GroupOrganized : public Base<iType>{
   public:
-  GroupOrganized(iType (&array)[N], int groups);//TODO: IMPLEMENT ORGANIZATIONS
+  inline GroupOrganized(iType* array, int groups);//DONE
 };
 
-template<typename iType, int N>
+template<typename iType, unsigned int N>
 class FullyOrganized : public Base<iType>{
   public:
-  FullyOrganized(iType (&array)[N]);//TODO: IMPLEMENT ORGANIZATIONS
+  inline FullyOrganized(iType* array);//DONE
 };
 #endif
