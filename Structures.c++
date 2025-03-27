@@ -40,7 +40,7 @@ inline Base<iType>::~Base(){
 
 template<typename iType>
 inline iType Base<iType>::operator[](int index){
-  if(index > this->nElem);
+  if(index > this->nElem) throw(1);
   if(index >= 0) return this->eStart[index];
   else return *(this->eEnd + index + 1);
 }
@@ -49,10 +49,10 @@ inline iType Base<iType>::operator[](int index){
 //Unorganized definitions
 //=================================================================
 
-template<typename iType, unsigned int N>
-inline Unorganized<iType, N>::Unorganized(iType* array){
+template<typename iType>
+inline Unorganized<iType>::Unorganized(iType* array, unsigned int num){
   //assign # of elements in array
-  this->nElem = N;
+  this->nElem = num;
   //assign total length of array
   this->len = this->nElem + 512;
 
@@ -65,7 +65,7 @@ inline Unorganized<iType, N>::Unorganized(iType* array){
   this->eEnd = this->end - 257;
 
   //copy over unsorted
-  for(int i = 0; i < N; i++){
+  for(int i = 0; i < num; i++){
     this->eStart[i] = array[i];
   }
 }
@@ -74,10 +74,10 @@ inline Unorganized<iType, N>::Unorganized(iType* array){
 //GroupOrganized definitions
 //=================================================================
 
-template<typename iType, unsigned int N>
-inline GroupOrganized<iType, N>::GroupOrganized(iType* array, int groups){
+template<typename iType>
+inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, int groups){
   //assign # of elements in array
-  this->nElem = N;
+  this->nElem = num;
   //assign total length of array
   this->len = this->nElem + 512;
 
@@ -90,7 +90,7 @@ inline GroupOrganized<iType, N>::GroupOrganized(iType* array, int groups){
   this->eEnd = this->end - 257;
 
   //copy over unsorted
-  for(int i = 0; i < N; i++){
+  for(int i = 0; i < num; i++){
     this->eStart[i] = array[i];
   }
 
@@ -106,10 +106,10 @@ inline GroupOrganized<iType, N>::GroupOrganized(iType* array, int groups){
 //FullyOrganized definitions
 //=================================================================
 
-template<typename iType, unsigned int N>
-inline FullyOrganized<iType, N>::FullyOrganized(iType* array){
+template<typename iType>
+inline FullyOrganized<iType>::FullyOrganized(iType* array, unsigned int num){
   //assign # of elements in array
-  this->nElem = N;
+  this->nElem = num;
   //assign total length of array
   this->len = this->nElem + 512;
 
@@ -122,7 +122,7 @@ inline FullyOrganized<iType, N>::FullyOrganized(iType* array){
   this->eEnd = this->end - 257;
 
   //copy over unsorted
-  for(int i = 0; i < N; i++){
+  for(int i = 0; i < num; i++){
     this->eStart[i] = array[i];
   }
 

@@ -22,21 +22,21 @@ struct Base{
   //+/- indexing
   iType operator[](int index);
 };
-template<typename iType, unsigned int N>
+template<typename iType>
 class Unorganized : public Base<iType>{
   public:
-  inline Unorganized(iType* array);//DONE
+  inline Unorganized(iType* array, unsigned int num);//DONE
 };
 
-template<typename iType, unsigned int N>
+template<typename iType>
 class GroupOrganized : public Base<iType>{
   public:
-  inline GroupOrganized(iType* array, int groups);//DONE
+  inline GroupOrganized(iType* array, unsigned int num, int groups);//DONE
 };
 
-template<typename iType, unsigned int N>
+template<typename iType>
 class FullyOrganized : public Base<iType>{
   public:
-  inline FullyOrganized(iType* array);//DONE
+  inline FullyOrganized(iType* array, unsigned int num);//DONE
 };
 #endif
