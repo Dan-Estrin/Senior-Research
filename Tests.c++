@@ -4,7 +4,7 @@
 #include "Structures.c++"
 
 template<typename T>
-inline void GenTest(unsigned int elem, T comparison){
+inline void GenTest(unsigned int elem, T comparison, int group){
   int* k = new int[elem];
 
   for(int i = 0; i < elem; i++){
@@ -17,7 +17,7 @@ inline void GenTest(unsigned int elem, T comparison){
   const std::chrono::duration<double> un_init{un_end - un_start};
 
   const std::chrono::_V2::steady_clock::time_point gr_start = std::chrono::steady_clock::now();
-  GroupOrganized<T> gr = GroupOrganized<T>(k, elem, 200);
+  GroupOrganized<T> gr = GroupOrganized<T>(k, elem, group);
   const std::chrono::_V2::steady_clock::time_point gr_end = std::chrono::steady_clock::now();
   const std::chrono::duration<double> gr_init{gr_end - gr_start};
 
@@ -33,24 +33,30 @@ inline void GenTest(unsigned int elem, T comparison){
   std::cout << "===========================================" << std::endl;
   int a = 0;
   const std::chrono::_V2::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-  for(T i = 0; i < elem; i++){
-    if(un[i] < comparison) a++;
+  for(int j = 0; j < RAND_MAX; j++){
+    for(T i = 0; i < elem; i++){
+      if(un[i] == j) a++;
+    }
   }
   const std::chrono::_V2::steady_clock::time_point t2 = std::chrono::steady_clock::now();
   const std::chrono::duration<double> un_branch{t2 - t1};
 
   int b = 0;
   const std::chrono::_V2::steady_clock::time_point t3 = std::chrono::steady_clock::now();
-  for(T i = 0; i < elem; i++){
-    if(gr[i] < comparison) b++;
+  for(int j = 0; j < RAND_MAX; j++){
+    for(T i = 0; i < elem; i++){
+      if(gr[i] == j) b++;
+    }
   }
   const std::chrono::_V2::steady_clock::time_point t4 = std::chrono::steady_clock::now();
   const std::chrono::duration<double> gr_branch{t4 - t3};
 
   int c = 0;
   const std::chrono::_V2::steady_clock::time_point t5 = std::chrono::steady_clock::now();
-  for(T i = 0; i < elem; i++){
-    if(fu[i] < comparison) c++;
+  for(int j = 0; j < RAND_MAX; j++){
+    for(T i = 0; i < elem; i++){
+      if(fu[i] == j) c++;
+    }
   }
   const std::chrono::_V2::steady_clock::time_point t6 = std::chrono::steady_clock::now();
   const std::chrono::duration<double> fu_branch{t6 - t5};
