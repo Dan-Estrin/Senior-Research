@@ -74,8 +74,20 @@ inline void Base<iType>::AddFront(iType elem){
 
 template<typename iType>
 inline void Base<iType>::AddBack(iType elem){
+  this->eEnd = this->eEnd + 1;
+  *this->eEnd = elem;
+}
+
+template<typename iType>
+inline void Base<iType>::PopBack(){
+  *this->eEnd = 0;
+  this->eEnd = this->eEnd - 1;
+}
+
+template<typename iType>
+inline void Base<iType>::PopFront(){
+  *this->eStart = 0;
   this->eStart = this->eStart + 1;
-  *this->eEnd= elem;
 }
 
 //=================================================================
