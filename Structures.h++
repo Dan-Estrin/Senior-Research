@@ -15,12 +15,21 @@ struct Base{
   int nElem;
   //number of total spaces in array
   int len;
-
+  
+  inline void init(iType* array, unsigned int num);
   inline ~Base();
 
   public:
   //+/- indexing
-  iType operator[](int index);
+  inline iType operator[](int index);
+  //add element to front
+  inline void AddFront(iType elem);
+  //add element to end
+  inline void AddBack(iType elem);
+  //pop element from front
+  inline void PopFront();
+  //pop element from end
+  inline void PopBack();
 };
 template<typename iType>
 class Unorganized : public Base<iType>{

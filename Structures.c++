@@ -4,7 +4,7 @@
 //=================================================================
 
 template<typename iType>
-int partition(iType* array, int low, int high) {
+inline int partition(iType* array, int low, int high) {
   int i = low - 1;
   for (int j = low; j <= high - 1; j++) {
     if (array[j] < array[high]) {
@@ -34,6 +34,27 @@ void quicksort(iType* array, int low, int high) {
 //=================================================================
 
 template<typename iType>
+inline void Base<iType>::init(iType* array, unsigned int num){
+  //assign # of elements in array
+  this->nElem = num;
+  //assign total length of array
+  this->len = this->nElem + 512;
+
+  //create array & store end
+  this->start = new iType[this->len];
+  this->end = (this->start + this->len - 1);
+
+  //assign element start/end positions
+  this->eStart = this->start + 255;
+  this->eEnd = this->end - 257;
+
+  //copy over unsorted
+  for(int i = 0; i < num; i++){
+    this->eStart[i] = array[i];
+  }
+}
+
+template<typename iType>
 inline Base<iType>::~Base(){
   delete[] this->start;
 }
@@ -45,29 +66,25 @@ inline iType Base<iType>::operator[](int index){
   else return *(this->eEnd + index + 1);
 }
 
+template<typename iType>
+inline void Base<iType>::AddFront(iType elem){
+  this->eStart = this->eStart - 1;
+  *this->eStart = elem;
+}
+
+template<typename iType>
+inline void Base<iType>::AddBack(iType elem){
+  this->eStart = this->eStart + 1;
+  *this->eEnd= elem;
+}
+
 //=================================================================
 //Unorganized definitions
 //=================================================================
 
 template<typename iType>
 inline Unorganized<iType>::Unorganized(iType* array, unsigned int num){
-  //assign # of elements in array
-  this->nElem = num;
-  //assign total length of array
-  this->len = this->nElem + 512;
-
-  //create array & store end
-  this->start = new iType[this->len];
-  this->end = (this->start + this->len - 1);
-
-  //assign element start/end positions
-  this->eStart = this->start + 255;
-  this->eEnd = this->end - 257;
-
-  //copy over unsorted
-  for(int i = 0; i < num; i++){
-    this->eStart[i] = array[i];
-  }
+  Base<iType>::init(array, num);
 }
 
 //=================================================================
@@ -76,23 +93,7 @@ inline Unorganized<iType>::Unorganized(iType* array, unsigned int num){
 
 template<typename iType>
 inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, int groups){
-  //assign # of elements in array
-  this->nElem = num;
-  //assign total length of array
-  this->len = this->nElem + 512;
-
-  //create array & store end
-  this->start = new iType[this->len];
-  this->end = (this->start + this->len - 1);
-
-  //assign element start/end positions
-  this->eStart = this->start + 255;
-  this->eEnd = this->end - 257;
-
-  //copy over unsorted
-  for(int i = 0; i < num; i++){
-    this->eStart[i] = array[i];
-  }
+  Base<iType>::init(array, num);
 
   //sorting each part of the array by sections determined by group #
   //leftover elements at the end are not sorted
@@ -108,23 +109,6 @@ inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, int
 
 template<typename iType>
 inline FullyOrganized<iType>::FullyOrganized(iType* array, unsigned int num){
-  //assign # of elements in array
-  this->nElem = num;
-  //assign total length of array
-  this->len = this->nElem + 512;
-
-  //create array & store end
-  this->start = new iType[this->len];
-  this->end = (this->start + this->len - 1);
-
-  //assign element start/end positions
-  this->eStart = this->start + 255;
-  this->eEnd = this->end - 257;
-
-  //copy over unsorted
-  for(int i = 0; i < num; i++){
-    this->eStart[i] = array[i];
-  }
-
+  Base<iType>::init(array, num);
   quicksort(this->eStart, 0, this->nElem - 1);
 }
