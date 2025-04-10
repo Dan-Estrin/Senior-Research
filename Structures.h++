@@ -30,22 +30,29 @@ struct Base{
   inline void PopFront();
   //pop element from end
   inline void PopBack();
+  //change the element at index
+  inline void ChangeAt(int index, iType replacement);
 };
 template<typename iType>
 class Unorganized : public Base<iType>{
   public:
-  inline Unorganized(iType* array, unsigned int num);//DONE
+  inline Unorganized(iType* array, unsigned int num);
 };
 
 template<typename iType>
 class GroupOrganized : public Base<iType>{
+  private:
+  unsigned int groups;
+
   public:
-  inline GroupOrganized(iType* array, unsigned int num, int groups);//DONE
+  inline GroupOrganized(iType* array, unsigned int num, unsigned int groups);
+  inline void NewGroups(int groups);
+  inline void Reorganize(int group);
 };
 
 template<typename iType>
 class FullyOrganized : public Base<iType>{
   public:
-  inline FullyOrganized(iType* array, unsigned int num);//DONE
+  inline FullyOrganized(iType* array, unsigned int num);
 };
 #endif

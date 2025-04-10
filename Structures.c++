@@ -90,6 +90,12 @@ inline void Base<iType>::PopFront(){
   this->eStart = this->eStart + 1;
 }
 
+template<typename iType>
+inline void Base<iType>::ChangeAt(int index, iType replacement){
+  if(index < 0) *(this->eEnd + index) = replacement;
+  else *(this->eStart + index) = replacement;
+}
+
 //=================================================================
 //Unorganized definitions
 //=================================================================
@@ -104,15 +110,30 @@ inline Unorganized<iType>::Unorganized(iType* array, unsigned int num){
 //=================================================================
 
 template<typename iType>
-inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, int groups){
+inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, unsigned int groups){
   Base<iType>::init(array, num);
-
+  this->groups = groups;
   //sorting each part of the array by sections determined by group #
   //leftover elements at the end are not sorted
   int interval = (this->nElem/groups);
   for(int i = 0; i < groups; i++){
     quicksort((this->eStart + (i * interval)), 0, interval - 1);
   }
+}
+
+template<typename iType>
+inline void GroupOrganized<iType>::NewGroups(int groups){
+  this->groups = groups;
+  int interval = (this->nElem/groups);
+  for(int i = 0; i < groups; i++){
+    quicksort((this->eStart + (i * interval)), 0, interval - 1);
+  }
+}
+
+template<typename iType>
+inline void GroupOrganized<iType>::Reorganize(int group){
+  int interval = this->nElem/this->groups;
+  quicksort((this->eStart + (group * interval)), 0, interval - 1);
 }
 
 //=================================================================
