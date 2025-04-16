@@ -113,27 +113,40 @@ template<typename iType>
 inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, unsigned int groups){
   Base<iType>::init(array, num);
   this->groups = groups;
-  //sorting each part of the array by sections determined by group #
-  //leftover elements at the end are not sorted
-  int interval = (this->nElem/groups);
-  for(int i = 0; i < groups; i++){
-    quicksort((this->eStart + (i * interval)), 0, interval - 1);
+  //# of elements inside each group
+  int interval = this->nElem/groups;
+  //1 or less results in no actual sorting
+  if(interval > 1){
+    for(int i = 0; i < groups; i++){
+      quicksort(this->eStart + (i * interval), 0, interval - 1);
+    }
+    if((float)this->nElem/groups > interval){
+      quicksort(this->eStart + (interval * groups), 0, (this->nElem % groups) - 1);
+    }
   }
 }
 
 template<typename iType>
 inline void GroupOrganized<iType>::NewGroups(int groups){
   this->groups = groups;
-  int interval = (this->nElem/groups);
-  for(int i = 0; i < groups; i++){
-    quicksort((this->eStart + (i * interval)), 0, interval - 1);
+  int interval = this->nElem/groups;
+  //1 or less results in no actual sorting
+  if(interval > 1){
+    for(int i = 0; i < groups; i++){
+      quicksort(this->eStart + (i * interval), 0, interval - 1);
+    }
+    if((float)this->nElem/groups > interval){
+      quicksort(this->eStart + (interval * groups), 0, (this->nElem % interval) - 1);
+    }
   }
 }
 
 template<typename iType>
 inline void GroupOrganized<iType>::Reorganize(int group){
   int interval = this->nElem/this->groups;
-  quicksort((this->eStart + (group * interval)), 0, interval - 1);
+  if(interval > 1){
+    quicksort(this->eStart + (group * interval), 0, interval - 1);
+  }
 }
 
 //=================================================================
