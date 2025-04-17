@@ -233,27 +233,13 @@ inline void GroupAsymtote(unsigned int elem){
     const std::chrono::_V2::steady_clock::time_point t3 = std::chrono::steady_clock::now();
     for(int j = 0; j < RAND_MAX; j++){
       for(T i = 0; i < elem; i++){
-        if(gr[i] > j) b++;
+        if(gr[i] < j) b++;
       }
     }
     const std::chrono::_V2::steady_clock::time_point t4 = std::chrono::steady_clock::now();
     const std::chrono::duration<double> gr_branch{t4 - t3};
-    myfile << i << ' ' << (gr_branch.count() + gr_init.count()) << '\n';
+    myfile << (gr_branch.count() + gr_init.count()) << '\n';
     b = 0;
   }
-  const std::chrono::_V2::steady_clock::time_point un_start = std::chrono::steady_clock::now();
-  Unorganized<T> un = Unorganized<T>(k, elem);
-  const std::chrono::_V2::steady_clock::time_point un_end = std::chrono::steady_clock::now();
-  const std::chrono::duration<double> un_init{un_end - un_start};
-  int a = 0;
-  const std::chrono::_V2::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-  for(int j = 0; j < RAND_MAX; j++){
-    for(T i = 0; i < elem; i++){
-      if(un[i] > j) a++;
-    }
-  }
-  const std::chrono::_V2::steady_clock::time_point t2 = std::chrono::steady_clock::now();
-  const std::chrono::duration<double> un_branch{t2 - t1};
-  myfile << 0 << ' ' << (un_branch.count() + un_init.count()) << '\n';
   myfile.close();
 }

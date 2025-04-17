@@ -117,9 +117,11 @@ inline GroupOrganized<iType>::GroupOrganized(iType* array, unsigned int num, uns
   int interval = this->nElem/groups;
   //1 or less results in no actual sorting
   if(interval > 1){
+    //sort up to number of groups
     for(int i = 0; i < groups; i++){
       quicksort(this->eStart + (i * interval), 0, interval - 1);
     }
+    //if any remaining elements are unsorted finish them
     if((float)this->nElem/groups > interval){
       quicksort(this->eStart + (interval * groups), 0, (this->nElem % groups) - 1);
     }
